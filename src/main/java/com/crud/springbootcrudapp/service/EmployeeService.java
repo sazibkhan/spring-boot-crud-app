@@ -6,7 +6,10 @@ import com.crud.springbootcrudapp.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -21,7 +24,9 @@ public class EmployeeService {
     }
 
     public Employee copyDtoToEntity(EmployeeDTO employeeDTO) {
-        Employee employee=new Employee();
+
+        Employee employee = new Employee();
+
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setBuilding(employeeDTO.getBuilding());
@@ -32,6 +37,30 @@ public class EmployeeService {
     }
 
 
+    public List<EmployeeDTO> findAllEmployee() {
+
+        List<EmployeeDTO> employeeDTOList = new ArrayList<EmployeeDTO>();
+        List<Employee> employeeList = new ArrayList<Employee>();
+        employeeList = employeeRepo.findAll();
+
+        for (Employee employee : employeeList) {
+            employeeDTOList.add(copyEntityToDto(employee));
+        }
+        return employeeDTOList;
+    }
+
+    private EmployeeDTO copyEntityToDto(Employee employee) {
+
+        EmployeeDTO employeeDTO=new EmployeeDTO();
+
+        employeeDTO.setEmployeeId(employee.getEmployeeId());
+        employeeDTO.setFirstName(employee.getFirstName());
+        employeeDTO.setLastName(employee.getLastName());
+        employeeDTO.setBuilding(employee.getBuilding());
+        employeeDTO.setDivision(employee.getDivision());
+        employeeDTO.setRoom(employee.getRoom());
+        return employeeDTO;
+    }
 
 
 }

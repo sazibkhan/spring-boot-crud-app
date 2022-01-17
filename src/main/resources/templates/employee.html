@@ -70,6 +70,39 @@
     </div>
 
 
+<div>
+    <h5>All Employee</h5>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name </th>
+            <th>Building</th>
+            <th>Division </th>
+            <th>Room </th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="value, rowStat : ${employeeList}">
+            <td th:text="${rowStat.count}"></td>
+            <td th:text="${value.firstName}">Name</td>
+            <td th:text="${value.lastName}">Roll</td>
+            <td th:text="${value.building}">building</td>
+            <td th:text="${value.division}">Division</td>
+            <td th:text="${value.room}">room</td>
+
+          <!--  <td><a th:href="${'/update/student/'+value.studentID}"
+                   class="btn btn-danger">Edit</a></td>
+
+            <td><a th:href="${'/delete/student/'+value.studentID}"
+                   class="btn btn-danger">Delete</a></td>
+-->
+
+        </tr>
+
+
+    </table>
+</div>
+</div>
 
 
 

@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class EmployeeController {
-
-
-
     @Autowired
     private EmployeeService employeeService;
 
     @RequestMapping(path = "/")
     public String employee(Model model){
         model.addAttribute("employeeDTO",new EmployeeDTO());
+        model.addAttribute("employeeList", employeeService.findAllEmployee());
         return "employee";
     }
 
