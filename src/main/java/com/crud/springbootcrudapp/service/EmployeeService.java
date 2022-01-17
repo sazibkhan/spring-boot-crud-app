@@ -3,6 +3,7 @@ package com.crud.springbootcrudapp.service;
 import com.crud.springbootcrudapp.dto.EmployeeDTO;
 import com.crud.springbootcrudapp.entity.Employee;
 import com.crud.springbootcrudapp.repo.EmployeeRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
-
 
     public void saveEmployee(EmployeeDTO employeeDTO) {
         employeeRepo.save(copyDtoToEntity(employeeDTO));
@@ -42,7 +42,6 @@ public class EmployeeService {
         List<EmployeeDTO> employeeDTOList = new ArrayList<EmployeeDTO>();
         List<Employee> employeeList = new ArrayList<Employee>();
         employeeList = employeeRepo.findAll();
-
         for (Employee employee : employeeList) {
             employeeDTOList.add(copyEntityToDto(employee));
         }
@@ -61,6 +60,22 @@ public class EmployeeService {
         employeeDTO.setRoom(employee.getRoom());
         return employeeDTO;
     }
+
+
+    public  EmployeeDTO findByEmployeeId(Long employeeId){
+
+        EmployeeDTO employeeDTO=new EmployeeDTO();
+        Employee employee=new Employee();
+        employee=employeeRepo.getById(employeeId);
+        BeanUtils.copyProperties(employee, employeeDTO);
+        return  employeeDTO;
+    }
+
+    public void deleteEmployee(EmployeeDTO employeeDTO) {
+        employeeRepo.deleteById(employeeDTO.getEmployeeId());
+
+    }
+
 
 
 }
