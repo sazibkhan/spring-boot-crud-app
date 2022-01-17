@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title>Student</title>
+<th:block th:include="layout/header"></th:block>
+</head>
+<body>
+	<div class="container">
+
+		<div>
+			<form class="form-horizontal" th:object="${studentDTO}"
+				th:action="@{/save/student}" method="post"
+				enctype="multipart/form-data">
+
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-1">
+						<input type="hidden" class="form-control" th:field="*{studentID}" />
+					</div>
+				</div>
+				
+				<div class="form-group"><!-- " th:if="*{teacherID==null} -->
+					<label class="col-sm-2 control-label">Teacher *</label>
+					<div class="col-sm-4">
+						<select class="form-control" th:field="*{teacherDTO.teacherID}">
+							<option value="default" class="form-control">Select Teacher</option>
+							<option th:each="value : ${teacherList}"
+								th:value="${value.teacherID}" th:text="${value.teacherName}"
+								class="form-control" />
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label"> Name:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" th:field="*{studentName}"
+							required />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label"> Department:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control"
+							th:field="*{studentDepartment}" required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"> Roll:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" th:field="*{studentRoll}"
+							required />
+					</div>
+				</div>
+
+
+				<div class="form-group" style="margin-left: 15%">
+					<div class="col-sm-8">
+						<button type="submit" class="btn btn-primary">Add</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+		<div>
+			<h5>All Categorys</h5>
+			<table class="table table-striped">
+				<tr>
+					<th>Id</th>
+					<th>Student Name</th>
+					<th>Student Department</th>
+					<th>Student Roll</th>
+					<th>TeacherID </th>
+					<th>Action</th>
+				</tr>
+				<tr th:each="value, rowStat : ${studentList}">
+					<td th:text="${rowStat.count}"></td>
+					<td th:text="${value.studentName}">Name</td>
+					<td th:text="${value.studentDepartment}">Dept</td>
+					<td th:text="${value.studentRoll}">Roll</td>
+					<td th:text="${value.teacherDTO.teacherID}">TeacherID</td>
+					
+					<td><a th:href="${'/update/student/'+value.studentID}"
+						class="btn btn-danger">Edit</a></td>
+
+					<td><a th:href="${'/delete/student/'+value.studentID}"
+						class="btn btn-danger">Delete</a></td>
+
+
+				</tr>
+
+
+			</table>
+		</div>
+	</div>
+
+
+</body>
+</html>
